@@ -1,0 +1,23 @@
+.container{
+  background: linear-gradient(120deg, #46f0fc, #176ee7);
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.btn{
+  margin: 2rem 2rem;
+  background: #19e4f3;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  max-width: 90%;
+  font-size: 20px;
+  border: solid 1px #66a6ff;
+  cursor: pointer;
+}
+.btn:hover{
+  background: #66a6ff;
+}

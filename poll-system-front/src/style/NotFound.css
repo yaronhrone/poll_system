@@ -1,0 +1,30 @@
+.not_found{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: red;
+    width: 40%;
+    height: 50%;
+p {
+font-size: 20px;
+font-weight: bold;
+}
+}
+.title{
+    text-align: center; 
+}
+.btn_n{
+    width: 160px;
+    height: 80px;
+    font-size: 15px;
+    margin: 10px;
+    border: solid 1px #66a6ff;
+    background: #19e4f3;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.btn_n:hover{
+    background: #66a6ff;
+}
