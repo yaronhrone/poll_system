@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { useUserContext } from '../context/UserContext';
-import { loginUser } from '../serviceApi/ApiService';
+import React, { useContext, useEffect, useState } from 'react'
+import UserContext from '../context/UserContext';
+import { fetchCurrentUser, loginUser } from '../serviceApi/ApiService';
 import '../style/Singin.css';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
-    const { updateCurrentUserContext } = useUserContext();
+    const { updateCurrentUserContext, currentUser, isRequstToGetCurrentUserDone } = useContext(UserContext);
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [errorFromServer, setErrorFromServer] = useState('');
@@ -30,13 +30,14 @@ const Login = () => {
             return;
         }
         try {
-            const data = await loginUser({ username: username, password: password });
-            updateCurrentUserContext(data);
-            navigate('/poll');
+             await loginUser({ username: username, password: password });  
+             const {data}= await fetchCurrentUser();
 
+            updateCurrentUserContext(data);
+              navigate('/poll');
         } catch (error: any) {
             console.error(error);
-            if (error.status == 400 || error.status == 500) {
+            if (error.status == 400 || error.status == 401) {
                 setErrorFromServer(error.response.data);
             } if (error.code == 'ERR_NETWORK') {
                 setErrorFromServer('Network Error , pleease try again later');
@@ -45,13 +46,16 @@ const Login = () => {
                 setErrorFromServer('');
             }, 8000);
         }
-    }
+          
+        }
+
+    
 
     return (
         <div className='singin-container'>
             <form onSubmit={handelLogin} className='singin-form'>
                 <h1>Login Page</h1>
-                {errorFromServer && <p className='server-error'>{errorFromServer}</p>}
+                {errorFromServer && <p className='error'>{errorFromServer}</p>}
                 <div className="form-group">
                     <input type="text" id="username" name="username" onChange={ (e) => setUsername(e.target.value)} placeholder="Enter your username" style={{ width: "100%", paddingRight: "0", paddingLeft: "0.5rem", marginBottom: "0" }} />
                 </div>

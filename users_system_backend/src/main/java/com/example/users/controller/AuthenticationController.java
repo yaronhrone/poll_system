@@ -21,6 +21,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
+
             AuthenticationResponse authResponse = authenticationService.createAuthenticationToken(authenticationRequest);
             System.out.println("token: " + authResponse.getJwt());
             return ResponseEntity.ok(authResponse);

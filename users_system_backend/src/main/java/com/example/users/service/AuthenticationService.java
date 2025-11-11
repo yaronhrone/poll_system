@@ -24,7 +24,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse createAuthenticationToken(AuthenticationRequest authenticationRequest) throws Exception {
         try {
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername().trim());
         System.out.println(authenticationRequest.getPassword() + " request password" + userDetails.getPassword() + " user password");
             if (!passwordEncoder.matches(authenticationRequest.getPassword(), userDetails.getPassword())) {
                 throw new BadCredentialsException("Incorrect password");

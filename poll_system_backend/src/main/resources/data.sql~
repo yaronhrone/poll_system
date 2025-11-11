@@ -18,6 +18,6 @@ PRIMARY KEY(id)
 );
 INSERT INTO question (question, first_option, second_option, third_option, fourth_option) VALUES
 ('how many children do you have', '4 Or more', '2', '3', '1'),
-('What is it like to raise children?', 'Very fun and happy', 'Frustrating competing for this moment', 'Challenging but worth it', 'I do not have  children'),
+('What is it like to raise children?', 'Very fun and happy', 'Frustrating competing for this moment', 'Challenging but worth it', 'I do not have  children),
 ('Is your relationship damaged by the children?', 'Yes, we do not have a time together', 'No, we have a good relationship', 'Yes, we have a bad relationship now', 'No, we try to maintain our relationship as well'),
 ('Do you still have sex like before the kids?', 'Yes ,We try to keep it that way', 'No, there is no time and desire', 'Less than before but still doing it', 'It is much less necessary to schedule time specifically for this');

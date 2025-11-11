@@ -40,6 +40,8 @@ public class PollController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/answer")
     public ResponseEntity<String> answerQuestion(@RequestHeader(value = "Authorization") String token, @RequestBody Answer answer) {
+        System.out.println(answer + "answer before" );
+
         try {
             String jwtToken = token.substring(7);
             String username = jwtUtil.extractUsername(jwtToken);
@@ -51,6 +53,7 @@ public class PollController {
                 return new ResponseEntity<>(result, HttpStatus.OK);
         }else return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

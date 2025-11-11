@@ -4,6 +4,7 @@ package com.example.users.service;
 import com.example.users.Client.PollClient;
 import com.example.users.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +33,7 @@ public class PollClientService {
               String answer1 = pollClient.answer(answer);
 
               return answer1 + " ,The answer is save in the system";
-       }else return   " The answer is not save , the user withe id: " + answer.getUserId()+ " is not exists";
+       } return   " The answer is not save , the user withe id: " + answer.getUserId()+ " is not exists";
     }
     public List<AnswerResponse> allAnswerByUsername(String username){
         UserCustomer user = userService.getUserByUsername(username);
@@ -55,10 +56,21 @@ public class PollClientService {
     }
 
     public String updateQuestion(Question question){
+
         return pollClient.updateQuestion(question);
     }
     public String createQuestion(Question question){
-        return pollClient.createQuestion(question);
+
+        try {
+          String result = pollClient.createQuestion(question);
+        } catch (FeignException.BadRequest e) {
+            String errorBody = e.contentUTF8();
+            System.out.println("Error from remote service: " + errorBody);
+            return errorBody;
+        }
+        return "created";
+
+//        return pollClient.createQuestion(question);
     }
     public List<Answer> getAllAnswers() {
         return pollClient.getAllAnswers();

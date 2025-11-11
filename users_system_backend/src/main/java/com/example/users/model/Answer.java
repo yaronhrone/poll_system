@@ -4,7 +4,6 @@ package com.example.users.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Answer {
-//    private int id;
     @JsonProperty("answer_number")
     private int answerNumber;
     @JsonProperty("question_id")
@@ -16,7 +15,6 @@ public class Answer {
     }
 
     public Answer( int answerNumber, int questionId, int userId) {
-//        this.id = id;
         this.answerNumber = answerNumber;
         this.questionId = questionId;
         this.userId = userId;
@@ -25,20 +23,12 @@ public class Answer {
     @Override
     public String toString() {
         return "Answer{" +
-//                "id=" + id +
+
                 ", answerNumber=" + answerNumber +
                 ", questionId=" + questionId +
                 ", userId=" + userId +
                 '}';
     }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public int getAnswerNumber() {
         return answerNumber;

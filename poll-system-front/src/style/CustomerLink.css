@@ -1,0 +1,25 @@
+
+
+.custom-link {
+  color: #000000;
+  text-decoration: none;
+  margin: 2rem 2rem;
+  background: #19e4f3;
+  padding: 15px;
+  border-radius: 80px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 120px;
+  font-size: 20px;
+  border: solid 1px #66a6ff;
+  cursor: pointer;
+  
+}
+
+.custom-link:hover {
+  color: #3498db;
+  text-decoration: underline;
+}
+
+.btn:hover{
+  background: #66a6ff;
+}

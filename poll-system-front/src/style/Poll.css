@@ -21,3 +21,8 @@ align-items: center;
 .btn:hover{
   background: #66a6ff;
 }
+.s {
+  width: 120px ;
+  height: 40px ;
+  padding: 10px ;
+}

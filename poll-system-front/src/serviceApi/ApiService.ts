@@ -1,6 +1,5 @@
 import axios from "axios";
-import { Answer, Login,  User} from "../type/poll";
-import { data } from "react-router-dom";
+import { Answer, IQuestion, Login,  User} from "../type/poll";
 
 
 const POLL_URL = "http://localhost:8081/question";
@@ -26,19 +25,21 @@ const getAuthHeader = () => {
 
 export const fetchQuestion = async (id: number)  => {
   const response = await axios.get(`${POLL_URL}/${id}`);
-  console.log(response.data.question + " " + response.data.id + " data from api service" );
   
   return response.data;
+}
+export const logoutUser = () => {
+  removeAuthHeader();
 }
 
 export const fetchCurrentUser = () => {
     return axios.get(`${USER_URL}/users` , {headers: getAuthHeader()});
 }
 export const answerQuestion = async (answer: Answer) => {
-  console.log(answer);
+
   
   await axios.post(`${USER_URL}/poll/answer`, answer,{headers: getAuthHeader()});
-  
+ 
 }
 export const singinUser = async (user: User) => {
   console.log(user + " user from api service");
@@ -77,6 +78,8 @@ export const numberAnswerQuestion = async (id : number) =>{
 }
 export const getAllUsersAdmin = async() => {
   const {data} = await axios.get(`${USER_URL}/admin/all-users`, {headers: getAuthHeader()});
+
+  
   return data;
 }
 export const deleteUser = async (id : number) => {
@@ -84,6 +87,29 @@ export const deleteUser = async (id : number) => {
   return data;
 }
 export const numberAnswerQuestionUser = async (id : number) =>{ 
-  const {data}  = await axios.get(`${POLL_URL}/answer_user/${id}`);
+  const {data}  = await axios.get(`${POLL_URL}/answer-user/${id}`);
+  return data;
+}
+export const createQuestion = async (question: IQuestion) => {
+  
+  const {data} = await axios.post(`${USER_URL}/admin/create-question`, question, {headers: getAuthHeader()});
+  return data;
+}
+export const updateQuestion = async (question: IQuestion) => {
+  const {data} = await axios.put(`${USER_URL}/admin/update-question`, question, {headers: getAuthHeader()});
+  return data;
+}
+export const deleteQuestion = async (id : number) => {
+  const {data} = await axios.delete(`${USER_URL}/admin/delete-question/?id=${id}`, {headers: getAuthHeader()});
+  return data;
+}
+export const getQuestionById = async (id : number) => {
+  const {data} = await axios.get(`${USER_URL}/poll/${id}`, {headers: getAuthHeader()});
+  return data;
+}
+export const result = async () => {
+  const {data} = await axios.get(`${POLL_URL}/result`);
+
+  
   return data;
 }

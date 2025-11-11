@@ -1,0 +1,35 @@
+package com.example.polls.repository.mapper;
+
+import com.example.polls.model.ResultPoll;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ResultPollMapper  implements RowMapper<ResultPoll> {
+    @Override
+    public ResultPoll mapRow(ResultSet rs, int rowNum) throws SQLException {
+        ResultPoll result = new ResultPoll();
+        result.setQuestion(rs.getString("question"));
+        result.setFirstOption(rs.getString("first_option"));
+        result.setSecondOption(rs.getString("second_option"));
+        result.setThirdOption(rs.getString("third_option"));
+        result.setFourthOption(rs.getString("fourth_option"));
+        result.setCountFirstOption(rs.getInt("first_option_count"));
+        result.setCountSecondOption(rs.getInt("second_option_count"));
+        result.setCountThirdOption(rs.getInt("third_option_count"));
+        result.setCountFourthOption(rs.getInt("fourth_option_count"));
+        return result;
+    }
+}
+//int id = rs.getInt("question_id");
+//String question = rs.getString("question");
+//
+//List<QuestionResultDTO.OptionResult> options = List.of(
+//        new QuestionResultDTO.OptionResult(rs.getString("first_option"), rs.getInt("first_option_votes")),
+//        new QuestionResultDTO.OptionResult(rs.getString("second_option"), rs.getInt("second_option_votes")),
+//        new QuestionResultDTO.OptionResult(rs.getString("third_option"), rs.getInt("third_option_votes")),
+//        new QuestionResultDTO.OptionResult(rs.getString("fourth_option"), rs.getInt("fourth_option_votes"))
+//);
+//
+//            return new QuestionResultDTO(id, question, options);

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "localhost:3000")
+@CrossOrigin("http://localhost:3000")
 public class AdminController {
     @Autowired
     private PollClientService pollClientService;
@@ -24,11 +24,12 @@ public class AdminController {
 
     // Question
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create_question")
+    @PostMapping("/create-question")
     public ResponseEntity<String> createQuestion(@RequestBody Question question) {
+        System.out.println("create question from admin");
         try {
-        System.out.println("working question " + question);
             String result = pollClientService.createQuestion(question);
+            System.out.println(result + " from admin create question");
             if (result.contains("created")) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -38,7 +39,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete_question/")
+    @DeleteMapping("/delete-question/")
     public ResponseEntity<String> deleteQuestion(@RequestParam int id) {
         try {
             String result = pollClientService.deleteQuestion(id);
@@ -50,8 +51,9 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update_question")
+    @PutMapping("/update-question")
     public ResponseEntity<String> updateQuestion(@RequestBody Question question) {
+
         try {
             String result = pollClientService.updateQuestion(question);
             if (result.contains("update")) {
@@ -62,7 +64,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/result_question/{id}")
+    @GetMapping("/result-question/{id}")
     public ResponseEntity<List<NumberAnswerResponse>>  howManyUsersChooseEachOfQuestionOption(@PathVariable int id) {
         try {
             return new ResponseEntity<>(pollClientService.howManyUsersChooseEachOfQuestionOption(id), HttpStatus.OK);
@@ -71,7 +73,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all_questions")
+    @GetMapping("/all-questions")
     public ResponseEntity<List<Question>> getAllQuestions() {
         try {
             return new ResponseEntity<>(pollClientService.getAllQuestions(), HttpStatus.OK);
@@ -81,7 +83,7 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all_answers")
+    @GetMapping("/all-answers")
     public ResponseEntity<List<Answer>> getAllAnswers() {
         try {
             return new ResponseEntity<>(pollClientService.getAllAnswers(), HttpStatus.OK);
@@ -90,7 +92,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all_questions_and_answers")
+    @GetMapping("/all-questions-and-answers")
     public ResponseEntity<List<QuestionAndNumberAnswer>> getAllQuestionsAndAnswers() {
         try {
             return new ResponseEntity<>(pollClientService.getAllQuestionsAndAnswers(), HttpStatus.OK);
@@ -100,11 +102,13 @@ public class AdminController {
     }
     // Users
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete_user/")
+    @DeleteMapping("/delete-user/")
     public ResponseEntity<String> deleteUser(@RequestParam int id) {
         try {
+            System.out.println(id + " id user deleted");
             String result = userService.deleteById(id);
             if (result.contains("deleted")) {
+
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -112,7 +116,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all_users")
+    @GetMapping("/all-users")
     public ResponseEntity<List<UserCustomer>> getAllUsers() {
         try {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
@@ -121,7 +125,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/answer_user/{username}")
+    @GetMapping("/answer-user/{username}")
     public ResponseEntity<List<AnswerResponse>> getAllAnswerByUsername(@PathVariable String username) {
         try {
             return new ResponseEntity<>(pollClientService.allAnswerByUsername(username), HttpStatus.OK);
@@ -130,7 +134,7 @@ public class AdminController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/answer_user/{id}")
+    @GetMapping("/answer-user/{id}")
     public ResponseEntity<List<AnswerResponse>> getAllAnswerById(@PathVariable int id) {
         try {
             return new ResponseEntity<>(pollClientService.allAnswerByUserId(id), HttpStatus.OK);

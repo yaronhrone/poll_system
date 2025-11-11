@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Log the retrieved user
-        System.out.println("Retrieved user: " + user.getUsername() + " with roles: USER");
+        System.out.println("Retrieved user: " + user.getUsername() + " with roles: " + user.getRole());
 
         // Convert user roles to GrantedAuthorities
         List<GrantedAuthority> authorities = new ArrayList<>();

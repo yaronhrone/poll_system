@@ -60,6 +60,7 @@ public class PollController {
     @GetMapping("/all")
     public ResponseEntity<List<Question>> getAll(){
         try {
+
             return new ResponseEntity<>(pollService.getAllQuestions(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -82,7 +83,7 @@ public class PollController {
             List<AnswerResponse> list = pollService.getAllAnswerByUserId(id);
             if (!list.isEmpty()) {
                 return new ResponseEntity<>(list, HttpStatus.OK);
-            }return new ResponseEntity("The are not have answer",HttpStatus.NOT_FOUND);
+            }return new ResponseEntity("The user not have answer",HttpStatus.NOT_FOUND);
             } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -99,12 +100,12 @@ public class PollController {
     @PostMapping("answer")
     public ResponseEntity<String> answerQuestion(@RequestBody String answerQu) throws JsonProcessingException {
        try {
-
+           System.out.println(answerQu);
            Answer answer = objectMapper.readValue(answerQu, Answer.class);
           String answer1 =  pollService.answerQuestion(answer);
           if (answer1.contains("sending")){
                return new ResponseEntity(answer1,HttpStatus.OK);
-           } else return new ResponseEntity<>( answer1,HttpStatus.BAD_REQUEST);
+           } else return new ResponseEntity<>( answer1,HttpStatus.OK);
        } catch (Exception e) {
            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
        }
@@ -149,7 +150,7 @@ return new ResponseEntity<>(pollService.allQuestionAndNumberOfUsersAnswer(),Http
         return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
 }
-@DeleteMapping("/delete_answer/")
+@DeleteMapping("/delete-answer/")
 public  ResponseEntity  deleteAnswerByUser(@RequestParam int id){
         try {
             pollService.deleteAnswerByUser(id);
@@ -158,4 +159,13 @@ public  ResponseEntity  deleteAnswerByUser(@RequestParam int id){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
 }
+
+@GetMapping("/result")
+    public ResponseEntity<List<QuestionResultDTO>> resultPoll(){
+        try {
+            return new ResponseEntity<>(pollService.getResult(),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -17,6 +17,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PollClientService pollClientService;
 
     public String registerUser1(UserCustomer user){
         if (userRepository.getUserByEmailHelper(user.getEmail()) == null){
@@ -66,6 +68,8 @@ public class UserService {
 
     public String deleteById(int id){
         if (userRepository.getUserById(id) != null) {
+            pollClientService.deleteAnswer(id);
+
             return userRepository.deleteById(id);
         }return "The user withe id: " +id+ " is not exists";
     }

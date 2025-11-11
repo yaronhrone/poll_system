@@ -16,7 +16,7 @@ public interface PollClient {
     List<AnswerResponse> allAnswerByUserId (@PathVariable int id);
     @GetMapping("question/count-answer-user/{id}")
     Integer howManyQuestionUserAnswerById(@PathVariable int id);
-    @DeleteMapping("/question/delete_answer/")
+    @DeleteMapping("/question/delete-answer/")
     void deleteAnswer(@RequestParam int id);
     @PostMapping("/question")
     String createQuestion(@RequestBody Question question);
@@ -32,6 +32,7 @@ public interface PollClient {
     List<Question> getAllQuestions();
     @GetMapping("/question/all-question-and-number-answer")
     List<QuestionAndNumberAnswer> getAllQuestionsAndAnswers();
+
 
 
 }

@@ -12,14 +12,19 @@ public class PollService {
 @Autowired
     private PollRepository pollRepository;
 
-    public String createQuestion(Question question){
-
-        return pollRepository.createQuestion(question);
+    public String createQuestion(Question question) {
+        Question question1 = pollRepository.getQuestionByName(question.getQuestion());
+        if (question1 != null) {
+        return "The question is exists";
+        }
+            return pollRepository.createQuestion(question);
     }
     public String update(Question question){
 
         if (pollRepository.getQuestionById(question.getId()) != null){
-        return pollRepository.update(question);
+                pollRepository.update(question);
+            pollRepository.deleteAnswerByQuestion(question.getId());
+        return "The question is updated";
         }else return "The question is not exists";
     }
     public String deleteQuestion (int id ){
@@ -31,7 +36,6 @@ public class PollService {
         return pollRepository.getAllQuestions();
     }
     public Question getQuestionById(int id){
-        System.out.println(pollRepository.getQuestionById(id)+"the question service") ;
         return pollRepository.getQuestionById(id);
     }
     public List<AnswerResponse> getAllAnswerByUserId(int id){
@@ -45,8 +49,9 @@ public class PollService {
         return pollRepository.getAllAnswer();
     }
     public String  answerQuestion(Answer answer) {
-
-            return pollRepository.answerQuestion(answer) ;
+if(pollRepository.hasUserAnswered(answer.getQuestionId(),answer.getUserId())) {
+    return "You have already answered this question";
+}return pollRepository.answerQuestion(answer) ;
 
     }
     public Integer  howManyQuestionUserAnswerById(int id){
@@ -68,6 +73,10 @@ public class PollService {
         pollRepository.deleteAnswerByUser(userId);
     }
 
+    public List<QuestionResultDTO> getResult(){
+
+    return pollRepository.getResult();
+    }
 
 
     }

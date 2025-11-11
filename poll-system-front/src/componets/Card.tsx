@@ -8,8 +8,8 @@ import { User } from '../type/poll';
 
  interface Props {
     user: User | null ,
-    onDelete: ()  => void,
-    onResult: () => void,
+    onDelete: (id: number)  => void,
+    onResult: (id: number) => void,
 }
 
 const bull = (
@@ -21,8 +21,11 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard({user, onDelete , onResult }: Props) {
+export default function BasicCard({user , onDelete , onResult}: Props) {
     if (!user) return null;
+    
+  const safeOnDelete = onDelete || (() => {});
+  const safeOnResult = onResult || (() => {});
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -38,8 +41,8 @@ export default function BasicCard({user, onDelete , onResult }: Props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button  onClick={() => onDelete()} size="small">Delete</Button>
-        <Button  onClick={() => onResult()} size="small">Result</Button>
+        <Button  onClick={() => user.id && safeOnDelete(user.id)} size="small">Delete</Button>
+        <Button  onClick={() =>  user.id && safeOnResult(user.id)} size="small">Result</Button>
       </CardActions>
     </Card>
   );
